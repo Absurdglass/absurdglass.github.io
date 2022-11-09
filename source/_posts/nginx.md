@@ -6,7 +6,7 @@ tags:
 nginx 教程|菜鸟教程: [友情链接](https://www.runoob.com/w3cnote/nginx-setup-intro.html)
 ### 重新打开日志文件
 ``` bash
-nginx目录/sbin/nginx -s reoprn
+nginx目录/sbin/nginx -s reopen
 ```
 ### 重新加载nginx配置信息
 ``` bash
