@@ -98,3 +98,11 @@ npm ls --depth 0
 ``` bash
 hexo -v
 ```
+执行hexo d未能更新
+可以尝试如下方法
+
+1.删.deploy_git文件夹，然后hexo d
+
+2.删除页面缓存
+
+3.hexo clean之后 hexo deploy -g
