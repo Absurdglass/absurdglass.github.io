@@ -54,7 +54,7 @@ hexo s
 {% asset_img img_3.png This is an test image %}
 
 ### 7.hexo本地页面访问
-{% asset_img img.png This is an test image %}
+
 ### 8.生成ssh
 ``` bash
 git config --global user.name "你的用户名"
@@ -69,3 +69,32 @@ ssh-keygen -t rsa -C "你的gitHub邮箱"
 ### 10.gitHub添加deploy keys，并允许覆盖
 {% asset_img img_5.png This is an test image %}  
 {% asset_img img_6.png This is an test image %}
+
+### 11.修改Hexo项目文件夹下单_config.yml文件，拉到最底部找到deploy:填写如下内容
+``` bash
+type: 'git'
+    repo: https://github.com/你的用户名/你的用户名.github.io.git
+    branch: master
+```
+
+### 12.git中执行以下命令
+``` bash
+npm install hexo-deployer-git --save  #安装部署工具
+hexo clean                            #清除缓存
+hexo generate                         #生成静态文件    可缩写hexo g
+hexo deploy                           #部署到Github   可缩写hexo d
+```
+
+### 13.在浏览器中输入 http://absurdglass.github.io/archives/
+
+### issues
+关于分支pull hexo并初始化配置后执行hexo g无法生成index.html的问题
+
+一种可能是npm插件不完整,请使用如下命令检查
+``` bash
+npm ls --depth 0
+```
+如果插件完整,可能是hexo版本与package.json中的hexo信息版本不一致,请检查两个版本是否一致
+``` bash
+hexo -v
+```
