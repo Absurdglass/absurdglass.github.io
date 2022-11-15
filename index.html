@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Glass</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="开发博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Glass">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Glass">
+<meta property="og:description" content="开发博客">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Glass" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Glass</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-WebSphere" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/11/14/WebSphere/" class="article-date">
+  <time datetime="2022-11-14T06:00:16.000Z" itemprop="datePublished">2022-11-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/11/14/WebSphere/">WebSphere相关问题记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="官方文档地址"><a href="#官方文档地址" class="headerlink" title="官方文档地址"></a>官方文档地址</h2><p>以下命令均通过实际使用和参考官方文档得出，如遇到疑问请使用命令关键词查询官方文档</p>
+<p>IBM官方参考文档|设置父类最后: <a target="_blank" rel="noopener" href="https://www.ibm.com/docs/en/was/9.0.5?topic=caus-modifying-war-class-loader-mode-using-wsadmin-scripting">友情链接</a></p>
+<h2 id="自动化部署"><a href="#自动化部署" class="headerlink" title="自动化部署"></a>自动化部署</h2><h3 id="wsadmin-scripting"><a href="#wsadmin-scripting" class="headerlink" title="wsadmin scripting"></a>wsadmin scripting</h3><p>官方提供了两种方式来写脚本<br>IBM官方参考文档|Using wsadmin scripting with Jacl (deprecated): <a target="_blank" rel="noopener" href="https://www.ibm.com/docs/en/was/9.0.5?topic=scripting-using-wsadmin-jacl-deprecated">友情链接</a></p>
+<p>IBM官方参考文档|Using wsadmin scripting with Jython: <a target="_blank" rel="noopener" href="https://www.ibm.com/docs/en/was/9.0.5?topic=scripting-using-wsadmin-jython">友情链接</a></p>
+<p>下文我们主要使用Jacl来实现，新项目建议使用Jython，Jython语法不同，如有需要可以查阅官方文档替换成Jython语法</p>
+<p>注意：Jacl是TCL的替代实现，完全用Java™代码编写。Jacl 已被弃用，Jython 是默认的脚本语言。</p>
+<h3 id="使用-wsadmin-脚本编制自动执行服务器管理"><a href="#使用-wsadmin-脚本编制自动执行服务器管理" class="headerlink" title="使用 wsadmin 脚本编制自动执行服务器管理"></a>使用 wsadmin 脚本编制自动执行服务器管理</h3><h4 id="1-创建-cmd-jacl"><a href="#1-创建-cmd-jacl" class="headerlink" title="1.创建 cmd.jacl"></a>1.创建 cmd.jacl</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设置传递的一个参数为op值，代表需要执行的操作</span></span><br><span class="line"><span class="built_in">set</span> op [lindex <span class="variable">$argv</span> 0]</span><br><span class="line"><span class="built_in">set</span> file_name [lindex <span class="variable">$argv</span> 1]</span><br><span class="line"><span class="built_in">set</span> script_path [lindex <span class="variable">$argv</span> 2]</span><br><span class="line"><span class="built_in">source</span> <span class="variable">$script_path</span>/<span class="variable">$file_name</span>.jacl</span><br><span class="line"><span class="built_in">source</span> <span class="variable">$script_path</span>/tools.jacl</span><br><span class="line">switch -exact -- <span class="variable">$op</span> &#123;</span><br><span class="line">    <span class="comment">#卸载war包</span></span><br><span class="line">    uninstall &#123;</span><br><span class="line">        uninstall <span class="variable">$AdminApp</span> <span class="variable">$AdminConfig</span> <span class="variable">$war_id</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#安装war包</span></span><br><span class="line">    install &#123;</span><br><span class="line">        install <span class="variable">$AdminApp</span> <span class="variable">$AdminConfig</span> <span class="variable">$install_path</span> <span class="variable">$war_name</span> <span class="variable">$war_id</span> <span class="variable">$cell_name</span> <span class="variable">$install_cluster_name</span> <span class="variable">$contextroot</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#安装war包后设置父类最后</span></span><br><span class="line">    parentLast &#123;</span><br><span class="line">        parentLast <span class="variable">$AdminConfig</span> <span class="variable">$war_id</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#停止集群</span></span><br><span class="line">    clusterStop &#123;</span><br><span class="line">        clusterStop <span class="variable">$AdminControl</span> <span class="variable">$cell_name</span> <span class="variable">$cluster_name</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#启动集群</span></span><br><span class="line">    clusterStart &#123;</span><br><span class="line">        clusterStart <span class="variable">$AdminControl</span> <span class="variable">$cell_name</span> <span class="variable">$cluster_name</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#节点同步</span></span><br><span class="line">    <span class="built_in">sync</span> &#123;</span><br><span class="line">        <span class="built_in">sync</span> <span class="variable">$AdminControl</span> <span class="variable">$AdminConfig</span> <span class="variable">$cell_name</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#启动集群</span></span><br><span class="line">    restartCluster &#123;</span><br><span class="line">        restartCluster <span class="variable">$AdminControl</span> <span class="variable">$AdminConfig</span> <span class="variable">$cell_name</span> <span class="variable">$cluster_name</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#启动节点</span></span><br><span class="line">    start &#123;</span><br><span class="line">        start <span class="variable">$AdminControl</span> <span class="variable">$AdminConfig</span> <span class="variable">$nodes</span> <span class="variable">$cell_name</span> <span class="variable">$app_name</span></span><br><span class="line">    &#125;</span><br><span class="line">    default &#123;puts <span class="string">&quot;use first argv uninstall,install,parentLast,clusterStop,clusterStart,sync,restartCluster,start&quot;</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line">puts <span class="string">&quot;exit&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-创建-tools-jacl"><a href="#2-创建-tools-jacl" class="headerlink" title="2.创建 tools.jacl"></a>2.创建 tools.jacl</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">proc clusterStop &#123;AdminControl cell_name cluster_name&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;clusterStop---&quot;</span></span><br><span class="line">    <span class="built_in">set</span> cluster [<span class="variable">$AdminControl</span> complateObjectName cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=Cluster,name=<span class="variable">$cluster_name</span>,*]</span><br><span class="line">    <span class="variable">$AdminControl</span> invoke <span class="variable">$cluster</span> stop</span><br><span class="line">    puts <span class="string">&quot;clusterStop-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc clusterStart &#123;AdminControl cell_name cluster_name&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;clusterStart---&quot;</span></span><br><span class="line">    <span class="built_in">set</span> clusterMgr [<span class="variable">$AdminControl</span> completeObjectName cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=ClusterMgr,*]</span><br><span class="line">    <span class="variable">$AdminControl</span> invoke <span class="variable">$clusterMgr</span> retrieveClusters</span><br><span class="line">    <span class="built_in">set</span> cluster [<span class="variable">$AdminControl</span> complateObjectName cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=Cluster,name=<span class="variable">$cluster_name</span>,*]</span><br><span class="line">    <span class="variable">$AdminControl</span> invoke <span class="variable">$cluster</span> start</span><br><span class="line">    puts <span class="string">&quot;clusterStart-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc restartCluster &#123;AdminControl AdminConfig cell_name cluster_name&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;restartCluster---&quot;</span></span><br><span class="line">    <span class="variable">$AdminControl</span> invoke [<span class="variable">$AdminControl</span> queryNames cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=Cluster,name=<span class="variable">$cluster_name</span>,*] rippleStart</span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;restartCluster-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc uninstall &#123;AdminApp AdminConfig war_id&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;uninstall---&quot;</span></span><br><span class="line">    <span class="variable">$AdminApp</span> uninstall <span class="variable">$war_id</span></span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;uninstall-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc install &#123;AdminApp AdminConfig install_path war_name war_id cell_name cluster_name contextroot&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;install---&quot;</span></span><br><span class="line">    <span class="built_in">set</span> add_webserver <span class="string">&quot;+WebSphere:cell=Cell0,node=AppNode01,server=webserver1&quot;</span></span><br><span class="line">    <span class="keyword">if</span> &#123;<span class="variable">$websever_flag</span> == 1&#125; &#123;<span class="built_in">set</span> cluster $cluster_name<span class="variable">$add_webserver</span>&#125;</span><br><span class="line">    <span class="variable">$AdminApp</span> install <span class="variable">$install_path</span>/<span class="variable">$war_name</span> [subst &#123;-cell <span class="variable">$cell_name</span> -appname war_id -contextroot <span class="variable">$contextroot</span> -MapWebModToVH &#123;&#123;<span class="variable">$war_id</span> <span class="variable">$war_name</span>,WEB-INF/web.xml default_host&#125;&#125;&#125;]</span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;install-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc parentLast &#123;AdminConfig war_id&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;classloaderMode-parent-last---&quot;</span></span><br><span class="line">    <span class="built_in">set</span> deployments [<span class="variable">$AdminConfig</span> getid /Deployment:<span class="variable">$war_id</span>/]</span><br><span class="line">    <span class="built_in">set</span> deploymentObject [<span class="variable">$AdminConfig</span> showAttribute <span class="variable">$deployments</span> deployedObject]</span><br><span class="line">    <span class="built_in">set</span> myModules [lindex [$<span class="variable">$AdminConfig</span> showAttribute <span class="variable">$deploymentObject</span> modules] 0]</span><br><span class="line">    foreach module <span class="variable">$myModules</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> &#123;[regexp WebModuleDeployment <span class="variable">$module</span>] == 1&#125; &#123;</span><br><span class="line">            <span class="variable">$AdminConfig</span> modify <span class="variable">$module</span> &#123;&#123;classloaderMode PARENT_LAST&#125;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;classloaderMode-parent-last-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc <span class="built_in">sync</span> &#123;AdminControl AdminConfig cell_name&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;sync---&quot;</span></span><br><span class="line">    <span class="built_in">set</span> node_names [<span class="variable">$AdminControl</span> queryNames cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=NodeSync,*]</span><br><span class="line">    foreach name <span class="variable">$node_names</span> &#123;</span><br><span class="line">        puts <span class="variable">$name</span></span><br><span class="line">        <span class="variable">$AdminControl</span> invoke <span class="variable">$name</span> <span class="built_in">sync</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;sync-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc start &#123;AdminControl AdminConfig nodes cell_name <span class="variable">$app_name</span>&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;start---&quot;</span></span><br><span class="line">    foreach node <span class="variable">$nodes</span> &#123;</span><br><span class="line">        catch &#123;<span class="variable">$AdminControl</span> invoke [<span class="variable">$AdminControl</span> queryNames cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=ApplicationManager,node=<span class="variable">$node</span>,*] startApplication $<span class="variable">$app_name</span>&#125; error</span><br><span class="line">        <span class="keyword">if</span> &#123; <span class="variable">$error</span> != <span class="string">&quot;&quot;</span> &#125; &#123;</span><br><span class="line">            puts <span class="string">&quot;failed to start <span class="variable">$node</span>:<span class="variable">$error</span>&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;start-end&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-创建-paramXXX-jacl"><a href="#3-创建-paramXXX-jacl" class="headerlink" title="3.创建 paramXXX.jacl"></a>3.创建 paramXXX.jacl</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设置应用名称</span></span><br><span class="line"><span class="built_in">set</span> app_name 包名(不需要后缀)</span><br><span class="line"><span class="comment">#打印应用名称</span></span><br><span class="line">puts <span class="string">&quot;app_name:<span class="variable">$app_name</span>&quot;</span></span><br><span class="line"><span class="comment">#设置集群名称</span></span><br><span class="line"><span class="built_in">set</span> cluster_name 集群名称</span><br><span class="line"><span class="comment">#设置war包名称</span></span><br><span class="line"><span class="built_in">set</span> war_name <span class="string">&quot;<span class="variable">$app_name</span>.war&quot;</span></span><br><span class="line"><span class="comment">#设置warId</span></span><br><span class="line"><span class="built_in">set</span> war_id <span class="string">&quot;_war&quot;</span></span><br><span class="line"><span class="built_in">set</span> war_id $app_name<span class="variable">$war_id</span></span><br><span class="line"><span class="comment">#设置单元格名称 根据需求设置，可以通过was安装页面右侧帮助查看上一个操作的脚本编制命令</span></span><br><span class="line"><span class="built_in">set</span> cell_name Cell0</span><br><span class="line"><span class="comment">#设置安装包路径</span></span><br><span class="line"><span class="built_in">set</span> install_path 安装包所在路径</span><br><span class="line"><span class="comment">#设置上下文</span></span><br><span class="line"><span class="built_in">set</span> contextroot 服务上下文</span><br><span class="line"><span class="comment">#是否需要增加webserver</span></span><br><span class="line"><span class="built_in">set</span> webserver_flag 0</span><br></pre></td></tr></table></figure>
+<h4 id="4-启动-wsadmin-工具"><a href="#4-启动-wsadmin-工具" class="headerlink" title="4.启动 wsadmin 工具"></a>4.启动 wsadmin 工具</h4><p>从 bin 目录中输入以下命令以启动 wsadmin 工具并连接到服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#was安装目录bin</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$WAS_HOME</span><span class="string">&quot;/bin&quot;</span></span><br><span class="line"><span class="comment">#启动命令及参数 $1 操作 $2 文件名参数 $3 脚本目录</span></span><br><span class="line">param_file=<span class="string">&quot;param_&quot;</span><span class="variable">$2</span></span><br><span class="line">./wsadmin.sh -conntype SOAP -user 用户名 -password 密码 -lang jacl -f 目录/cmd.jacl <span class="variable">$1</span> <span class="variable">$2</span> <span class="variable">$3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><p>从 bin 目录中输入以下命令以启动 wsadmin 工具并连接到服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin&gt;wsadmin -lang jython</span><br></pre></td></tr></table></figure>
+<p>从 bin 目录中输入以下命令，以本地方式并使用 Jython 脚本语言启动 wsadmin 工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsadmin -conntype none -lang jython</span><br></pre></td></tr></table></figure>
+<p>使用 wsadmin 命令指定 Jython V2.1</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsadmin -conntype soap -usejython21 <span class="literal">true</span> -f test.py</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/14/WebSphere/" data-id="clai7qn8p0000209s3kt76m54" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-db2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/11/10/db2/" class="article-date">
+  <time datetime="2022-11-10T01:52:31.000Z" itemprop="datePublished">2022-11-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/11/10/db2/">db2语法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="新增表字段"><a href="#新增表字段" class="headerlink" title="新增表字段"></a>新增表字段</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table 表名 add 字段名 数据类型 default 默认值</span><br><span class="line">alter table BANK_SOKECT_INFO ADD COLUMN DEPTNO  varchar(8);</span><br></pre></td></tr></table></figure>
+<h3 id="删除表字段"><a href="#删除表字段" class="headerlink" title="删除表字段"></a>删除表字段</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER table 表名 DROP column 字段名</span><br></pre></td></tr></table></figure>
+<h3 id="修改字段类型"><a href="#修改字段类型" class="headerlink" title="修改字段类型"></a>修改字段类型</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table studentinfo alter column stutel <span class="built_in">set</span> data <span class="built_in">type</span> char(11);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/10/db2/" data-id="clai7qn900003209s9o1s04nl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-nginx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/11/09/nginx/" class="article-date">
+  <time datetime="2022-11-09T08:52:52.000Z" itemprop="datePublished">2022-11-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/11/09/nginx/">nginx配置及相关命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>nginx 教程|菜鸟教程: <a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/nginx-setup-intro.html">友情链接</a></p>
+<h3 id="重新打开日志文件"><a href="#重新打开日志文件" class="headerlink" title="重新打开日志文件"></a>重新打开日志文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx目录/sbin/nginx -s reopen</span><br></pre></td></tr></table></figure>
+<h3 id="重新加载nginx配置信息"><a href="#重新加载nginx配置信息" class="headerlink" title="重新加载nginx配置信息"></a>重新加载nginx配置信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx目录/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
+<h3 id="nginx启动"><a href="#nginx启动" class="headerlink" title="nginx启动"></a>nginx启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx目录/sbin/nginx</span><br></pre></td></tr></table></figure>
+<h3 id="session保持"><a href="#session保持" class="headerlink" title="session保持"></a>session保持</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http&#123;</span><br><span class="line">    upstream xxx &#123;</span><br><span class="line">        <span class="comment">#ip_hash 用于session粘连</span></span><br><span class="line">        ip_hash;</span><br><span class="line">        server xxx.xxx.xxx.xxx:xxxx weight=1;</span><br><span class="line">        server xxx.xxx.xxx.xxx:xxxx weight=1;</span><br><span class="line">        keepalive 65;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="端口转发配置"><a href="#端口转发配置" class="headerlink" title="端口转发配置"></a>端口转发配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http&#123;</span><br><span class="line">    location /xxx &#123;</span><br><span class="line">        proxy_pass http://xxx;</span><br><span class="line">        proxy_set_header Host <span class="variable">$http_host</span>;</span><br><span class="line">        proxy_redirect / http://<span class="variable">$host</span>:<span class="variable">$server_port</span>/;</span><br><span class="line">        ...</span><br><span class="line">        proxy_connect_timeout 5; <span class="comment">#5秒超时</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置开机自启动：</p>
+<p>方式一：在/etc/rc.local中配置</p>
+<p>可以将此命令加入到rc.local文件中，这样开机的时候nginx就默认启动了</p>
+<p>vi /etc/rc.local</p>
+<p>加入一行  /etc/init.d/nginx start    保存并退出，下次重启会生效。</p>
+<p>方式二：将nginx配置成自启动的服务</p>
+<p>1.添加至服务管理列表，并让其开机自动启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --add nginx</span><br><span class="line">chkconfig nginx on</span><br><span class="line">chkconfig nginx --list</span><br></pre></td></tr></table></figure>
+<p>日志切片待学习</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/09/nginx/" data-id="clai7qn990005209s6bbf4zox" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-linuxCommand" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/11/08/linuxCommand/" class="article-date">
+  <time datetime="2022-11-08T07:51:51.000Z" itemprop="datePublished">2022-11-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/11/08/linuxCommand/">linux命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="linux命令"><a href="#linux命令" class="headerlink" title="linux命令"></a>linux命令</h2><p>Linux命令大全(手册): <a target="_blank" rel="noopener" href="https://www.linuxcool.com/">友情链接</a><br>Shell 教程|菜鸟教程: <a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-shell.html">友情链接</a></p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> 目录 <span class="comment">#进入指定目录</span></span><br><span class="line"><span class="built_in">cp</span> xxx newxxx <span class="comment">#复制文件</span></span><br><span class="line"><span class="built_in">mv</span> xxx newxxx <span class="comment">#移动文件</span></span><br><span class="line"><span class="built_in">ls</span> -lrt 目录 <span class="comment">#查看目录下文件，不输入目录则查看当前目录文件</span></span><br><span class="line"><span class="built_in">du</span> -h 目录 <span class="comment">#查看目录占用空间</span></span><br><span class="line"><span class="built_in">du</span> -h --max-depth=1 |<span class="built_in">sort</span> <span class="comment">#查看当前目录下所有一级子目录文件夹大小 并排序</span></span><br><span class="line">log_date=$(data -d yesterday +%Y-%m-%d) <span class="comment">#获取昨天的时间 使用时格式 $&#123;log_date&#125;</span></span><br><span class="line">find 目录 -<span class="built_in">type</span> f -name <span class="string">&quot;*.log&quot;</span> -ctime +7 -<span class="built_in">exec</span> <span class="built_in">rm</span> -f &#123;&#125; \; <span class="comment">#找出超过7天的日志文件并删除</span></span><br><span class="line">ps -ef|grep redis <span class="comment">#查看redis服务进程情况，这里拿redis服务举例,其他服务查询更改名字即可</span></span><br><span class="line">lsof -i :6379 <span class="comment">#查看6379（为redis的端口号）端口号是否被占用</span></span><br><span class="line">netstat -tnlp <span class="comment">#显示tcp的端口和进程等相关情况</span></span><br><span class="line">grep 查询内容 目录/文件 | <span class="built_in">wc</span> -l <span class="comment">#查询文件指定内容并统计行数</span></span><br></pre></td></tr></table></figure>
+<h3 id="创建定时任务"><a href="#创建定时任务" class="headerlink" title="创建定时任务"></a>创建定时任务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">crontab -l <span class="comment">#查看当前用户的定时任务</span></span><br><span class="line">crontab -e <span class="comment">#设置用户级别的定时任务，可以通过定时任务调用脚本</span></span><br><span class="line">* * * * * <span class="built_in">echo</span> `<span class="built_in">date</span>` &gt;&gt; /home/xxx/time.log</span><br><span class="line">* * * * * /bin/sh /webapps/logs/xxx.sh</span><br></pre></td></tr></table></figure>
+<p>配置系统级别的任务直接使用 root 权限编辑系统级别定时任务的配置文件： /etc/crontab</p>
+<h3 id="监控url脚本，通过定时任务结合使用"><a href="#监控url脚本，通过定时任务结合使用" class="headerlink" title="监控url脚本，通过定时任务结合使用"></a>监控url脚本，通过定时任务结合使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">usage</span></span>() &#123;     <span class="comment">#&lt;==帮助函数</span></span><br><span class="line">    <span class="built_in">echo</span> $<span class="string">&quot;usage:<span class="variable">$0</span> url&quot;</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">check_url</span></span>() &#123; <span class="comment">#&lt;==检测URL函数。</span></span><br><span class="line">    wget --spider -q -o /dev/null --tries=1 -T 5 <span class="variable">$1</span> </span><br><span class="line">   <span class="comment">#&lt;==采用wget返回值方法，这里的$1就是函数传参。</span></span><br><span class="line">    <span class="comment">#curl -s -o /dev/null $1 #&lt;==采用curl返回值方法也是可以的。</span></span><br><span class="line">    <span class="keyword">if</span> [ $? -eq 0 ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span> is yes.&quot;</span></span><br><span class="line">        <span class="built_in">exit</span> 0</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span> is fail.&quot;</span></span><br><span class="line">        <span class="comment">##失败后的逻辑、发送短信、邮件等等</span></span><br><span class="line">        <span class="built_in">exit</span> 1</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">main</span></span>() &#123;   <span class="comment">#&lt;==主函数。</span></span><br><span class="line">     <span class="keyword">if</span> [ <span class="variable">$#</span> -ne 1 ]   <span class="comment">#&lt;==如果传入的多个参数，则打印帮助函数，提示用户。</span></span><br><span class="line">     <span class="keyword">then</span></span><br><span class="line">         usage</span><br><span class="line">     <span class="keyword">fi</span></span><br><span class="line">     check_url <span class="variable">$1</span>     <span class="comment">#&lt;==接收函数的传参，即把结尾的$*传到这里。</span></span><br><span class="line">&#125;</span><br><span class="line">main $*            <span class="comment">#&lt;==这里的$*就是</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="服务启动校验"><a href="#服务启动校验" class="headerlink" title="服务启动校验"></a>服务启动校验</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">url=http://xxx</span><br><span class="line">code=`curl -I -m 30 -o /dev/null -s -w %&#123;http_code&#125;<span class="string">&quot;\n&quot;</span> <span class="variable">$url</span>`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;访问时间是：`date &#x27;+%Y-%m-%d %H:%M:%S&#x27;`--<span class="variable">$code</span>---&gt;<span class="variable">$url</span>&quot;</span></span><br><span class="line"><span class="comment">#while循环访问url，直到状态码200或者达到最大重试次数结束</span></span><br><span class="line">count=1</span><br><span class="line"><span class="keyword">while</span> ( [ <span class="variable">$code</span> -ne 200 -a <span class="variable">$count</span> -lt 9 ] )</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"> <span class="built_in">sleep</span> 20s</span><br><span class="line"> <span class="built_in">echo</span> <span class="string">&quot;访问时间是：`date &#x27;+%Y-%m-%d %H:%M:%S&#x27;`--<span class="variable">$code</span>---&gt;<span class="variable">$url</span>&quot;</span></span><br><span class="line"> ((count++))</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/08/linuxCommand/" data-id="clai7qn910004209s0n5yel0z" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-blogBuild" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/09/04/blogBuild/" class="article-date">
+  <time datetime="2022-09-04T14:27:42.000Z" itemprop="datePublished">2022-09-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/09/04/blogBuild/">Hexo个人博客搭建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Hexo个人博客搭建"><a href="#Hexo个人博客搭建" class="headerlink" title="Hexo个人博客搭建"></a>Hexo个人博客搭建</h2><h3 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h3><p>Git: <a target="_blank" rel="noopener" href="https://git-scm.com/downloads">友情链接</a><br>Hexo: <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/index.html">友情链接</a><br>Node.js: <a target="_blank" rel="noopener" href="http://nodejs.cn/">友情链接</a><br>GitHub: <a target="_blank" rel="noopener" href="https://github.com/">友情链接</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>git与node.js需要安装</p>
+<h3 id="1-新建文件夹"><a href="#1-新建文件夹" class="headerlink" title="1.新建文件夹"></a>1.新建文件夹</h3><p>在自己指定目录下新建一个文件夹，例如当前为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">G:\hexo</span><br></pre></td></tr></table></figure>
+<img src="/2022/09/04/blogBuild/img_1.png" class="" title="This is an test image">  
+<p>然后在该文件夹空白处右键  </p>
+<img src="/2022/09/04/blogBuild/img_2.png" class="" title="This is an test image">  
+<p>点击</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Git Bash Here</span><br></pre></td></tr></table></figure>
+<h3 id="2-在git中使用命令"><a href="#2-在git中使用命令" class="headerlink" title="2.在git中使用命令"></a>2.在git中使用命令</h3><p>npm命令需要在安装node.js后才可使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+<h3 id="3-验证安装完成命令"><a href="#3-验证安装完成命令" class="headerlink" title="3.验证安装完成命令"></a>3.验证安装完成命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+<h3 id="4-hexo初始化"><a href="#4-hexo初始化" class="headerlink" title="4.hexo初始化"></a>4.hexo初始化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<h3 id="5-hexo生成"><a href="#5-hexo生成" class="headerlink" title="5.hexo生成"></a>5.hexo生成</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+<p>也可以使用简写</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+<h3 id="6-hexo启动服务"><a href="#6-hexo启动服务" class="headerlink" title="6.hexo启动服务"></a>6.hexo启动服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<img src="/2022/09/04/blogBuild/img_3.png" class="" title="This is an test image">
+
+<h3 id="7-hexo本地页面访问"><a href="#7-hexo本地页面访问" class="headerlink" title="7.hexo本地页面访问"></a>7.hexo本地页面访问</h3><h3 id="8-生成ssh"><a href="#8-生成ssh" class="headerlink" title="8.生成ssh"></a>8.生成ssh</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;你的用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;你的gitHub邮箱&quot;</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;你的gitHub邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+<p>在git bash给出的路径中找到 id_rsa.pub 复制内容</p>
+<h3 id="9-gitHub创建仓库"><a href="#9-gitHub创建仓库" class="headerlink" title="9.gitHub创建仓库"></a>9.gitHub创建仓库</h3><img src="/2022/09/04/blogBuild/img_4.png" class="" title="This is an test image">
+
+<p>需要注意仓库名称必须是 你的用户名.github.io  </p>
+<h3 id="10-gitHub添加deploy-keys，并允许覆盖"><a href="#10-gitHub添加deploy-keys，并允许覆盖" class="headerlink" title="10.gitHub添加deploy keys，并允许覆盖"></a>10.gitHub添加deploy keys，并允许覆盖</h3><img src="/2022/09/04/blogBuild/img_5.png" class="" title="This is an test image">  
+<img src="/2022/09/04/blogBuild/img_6.png" class="" title="This is an test image">
+
+<h3 id="11-修改Hexo项目文件夹下单-config-yml文件，拉到最底部找到deploy-填写如下内容"><a href="#11-修改Hexo项目文件夹下单-config-yml文件，拉到最底部找到deploy-填写如下内容" class="headerlink" title="11.修改Hexo项目文件夹下单_config.yml文件，拉到最底部找到deploy:填写如下内容"></a>11.修改Hexo项目文件夹下单_config.yml文件，拉到最底部找到deploy:填写如下内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&#x27;git&#x27;</span></span><br><span class="line">    repo: https://github.com/你的用户名/你的用户名.github.io.git</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure>
+
+<h3 id="12-git中执行以下命令"><a href="#12-git中执行以下命令" class="headerlink" title="12.git中执行以下命令"></a>12.git中执行以下命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save  <span class="comment">#安装部署工具</span></span><br><span class="line">hexo clean                            <span class="comment">#清除缓存</span></span><br><span class="line">hexo generate                         <span class="comment">#生成静态文件    可缩写hexo g</span></span><br><span class="line">hexo deploy                           <span class="comment">#部署到Github   可缩写hexo d</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="13-在浏览器中输入-http-absurdglass-github-io-archives"><a href="#13-在浏览器中输入-http-absurdglass-github-io-archives" class="headerlink" title="13.在浏览器中输入 http://absurdglass.github.io/archives/"></a>13.在浏览器中输入 <a target="_blank" rel="noopener" href="http://absurdglass.github.io/archives/">http://absurdglass.github.io/archives/</a></h3><h3 id="issues"><a href="#issues" class="headerlink" title="issues"></a>issues</h3><p>关于分支pull hexo并初始化配置后执行hexo g无法生成index.html的问题</p>
+<p>一种可能是npm插件不完整,请使用如下命令检查</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="built_in">ls</span> --depth 0</span><br></pre></td></tr></table></figure>
+<p>如果插件完整,可能是hexo版本与package.json中的hexo信息版本不一致,请检查两个版本是否一致</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+<p>执行hexo d未能更新<br>可以尝试如下方法</p>
+<p>1.删.deploy_git文件夹，然后hexo d</p>
+<p>2.删除页面缓存</p>
+<p>3.hexo clean之后 hexo deploy -g</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/09/04/blogBuild/" data-id="clai7qn8w0001209s3cxj5hsj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/09/04/hello-world/" class="article-date">
+  <time datetime="2022-09-04T14:27:42.000Z" itemprop="datePublished">2022-09-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/09/04/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/09/04/hello-world/" data-id="clai7qn8y0002209sbk8jbsni" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/14/WebSphere/">WebSphere相关问题记录</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/10/db2/">db2语法</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/09/nginx/">nginx配置及相关命令</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/08/linuxCommand/">linux命令</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/04/blogBuild/">Hexo个人博客搭建</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

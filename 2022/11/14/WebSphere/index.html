@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>WebSphere相关问题记录 | Glass</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="官方文档地址以下命令均通过实际使用和参考官方文档得出，如遇到疑问请使用命令关键词查询官方文档 IBM官方参考文档|设置父类最后: 友情链接 自动化部署wsadmin scripting官方提供了两种方式来写脚本IBM官方参考文档|Using wsadmin scripting with Jacl (deprecated): 友情链接 IBM官方参考文档|Using wsadmin scriptin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebSphere相关问题记录">
+<meta property="og:url" content="http://example.com/2022/11/14/WebSphere/index.html">
+<meta property="og:site_name" content="Glass">
+<meta property="og:description" content="官方文档地址以下命令均通过实际使用和参考官方文档得出，如遇到疑问请使用命令关键词查询官方文档 IBM官方参考文档|设置父类最后: 友情链接 自动化部署wsadmin scripting官方提供了两种方式来写脚本IBM官方参考文档|Using wsadmin scripting with Jacl (deprecated): 友情链接 IBM官方参考文档|Using wsadmin scriptin">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-14T06:00:16.000Z">
+<meta property="article:modified_time" content="2022-11-15T12:44:38.538Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Glass" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Glass</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-WebSphere" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/11/14/WebSphere/" class="article-date">
+  <time datetime="2022-11-14T06:00:16.000Z" itemprop="datePublished">2022-11-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      WebSphere相关问题记录
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="官方文档地址"><a href="#官方文档地址" class="headerlink" title="官方文档地址"></a>官方文档地址</h2><p>以下命令均通过实际使用和参考官方文档得出，如遇到疑问请使用命令关键词查询官方文档</p>
+<p>IBM官方参考文档|设置父类最后: <a target="_blank" rel="noopener" href="https://www.ibm.com/docs/en/was/9.0.5?topic=caus-modifying-war-class-loader-mode-using-wsadmin-scripting">友情链接</a></p>
+<h2 id="自动化部署"><a href="#自动化部署" class="headerlink" title="自动化部署"></a>自动化部署</h2><h3 id="wsadmin-scripting"><a href="#wsadmin-scripting" class="headerlink" title="wsadmin scripting"></a>wsadmin scripting</h3><p>官方提供了两种方式来写脚本<br>IBM官方参考文档|Using wsadmin scripting with Jacl (deprecated): <a target="_blank" rel="noopener" href="https://www.ibm.com/docs/en/was/9.0.5?topic=scripting-using-wsadmin-jacl-deprecated">友情链接</a></p>
+<p>IBM官方参考文档|Using wsadmin scripting with Jython: <a target="_blank" rel="noopener" href="https://www.ibm.com/docs/en/was/9.0.5?topic=scripting-using-wsadmin-jython">友情链接</a></p>
+<p>下文我们主要使用Jacl来实现，新项目建议使用Jython，Jython语法不同，如有需要可以查阅官方文档替换成Jython语法</p>
+<p>注意：Jacl是TCL的替代实现，完全用Java™代码编写。Jacl 已被弃用，Jython 是默认的脚本语言。</p>
+<h3 id="使用-wsadmin-脚本编制自动执行服务器管理"><a href="#使用-wsadmin-脚本编制自动执行服务器管理" class="headerlink" title="使用 wsadmin 脚本编制自动执行服务器管理"></a>使用 wsadmin 脚本编制自动执行服务器管理</h3><h4 id="1-创建-cmd-jacl"><a href="#1-创建-cmd-jacl" class="headerlink" title="1.创建 cmd.jacl"></a>1.创建 cmd.jacl</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设置传递的一个参数为op值，代表需要执行的操作</span></span><br><span class="line"><span class="built_in">set</span> op [lindex <span class="variable">$argv</span> 0]</span><br><span class="line"><span class="built_in">set</span> file_name [lindex <span class="variable">$argv</span> 1]</span><br><span class="line"><span class="built_in">set</span> script_path [lindex <span class="variable">$argv</span> 2]</span><br><span class="line"><span class="built_in">source</span> <span class="variable">$script_path</span>/<span class="variable">$file_name</span>.jacl</span><br><span class="line"><span class="built_in">source</span> <span class="variable">$script_path</span>/tools.jacl</span><br><span class="line">switch -exact -- <span class="variable">$op</span> &#123;</span><br><span class="line">    <span class="comment">#卸载war包</span></span><br><span class="line">    uninstall &#123;</span><br><span class="line">        uninstall <span class="variable">$AdminApp</span> <span class="variable">$AdminConfig</span> <span class="variable">$war_id</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#安装war包</span></span><br><span class="line">    install &#123;</span><br><span class="line">        install <span class="variable">$AdminApp</span> <span class="variable">$AdminConfig</span> <span class="variable">$install_path</span> <span class="variable">$war_name</span> <span class="variable">$war_id</span> <span class="variable">$cell_name</span> <span class="variable">$install_cluster_name</span> <span class="variable">$contextroot</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#安装war包后设置父类最后</span></span><br><span class="line">    parentLast &#123;</span><br><span class="line">        parentLast <span class="variable">$AdminConfig</span> <span class="variable">$war_id</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#停止集群</span></span><br><span class="line">    clusterStop &#123;</span><br><span class="line">        clusterStop <span class="variable">$AdminControl</span> <span class="variable">$cell_name</span> <span class="variable">$cluster_name</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#启动集群</span></span><br><span class="line">    clusterStart &#123;</span><br><span class="line">        clusterStart <span class="variable">$AdminControl</span> <span class="variable">$cell_name</span> <span class="variable">$cluster_name</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#节点同步</span></span><br><span class="line">    <span class="built_in">sync</span> &#123;</span><br><span class="line">        <span class="built_in">sync</span> <span class="variable">$AdminControl</span> <span class="variable">$AdminConfig</span> <span class="variable">$cell_name</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#启动集群</span></span><br><span class="line">    restartCluster &#123;</span><br><span class="line">        restartCluster <span class="variable">$AdminControl</span> <span class="variable">$AdminConfig</span> <span class="variable">$cell_name</span> <span class="variable">$cluster_name</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#启动节点</span></span><br><span class="line">    start &#123;</span><br><span class="line">        start <span class="variable">$AdminControl</span> <span class="variable">$AdminConfig</span> <span class="variable">$nodes</span> <span class="variable">$cell_name</span> <span class="variable">$app_name</span></span><br><span class="line">    &#125;</span><br><span class="line">    default &#123;puts <span class="string">&quot;use first argv uninstall,install,parentLast,clusterStop,clusterStart,sync,restartCluster,start&quot;</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line">puts <span class="string">&quot;exit&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-创建-tools-jacl"><a href="#2-创建-tools-jacl" class="headerlink" title="2.创建 tools.jacl"></a>2.创建 tools.jacl</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">proc clusterStop &#123;AdminControl cell_name cluster_name&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;clusterStop---&quot;</span></span><br><span class="line">    <span class="built_in">set</span> cluster [<span class="variable">$AdminControl</span> complateObjectName cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=Cluster,name=<span class="variable">$cluster_name</span>,*]</span><br><span class="line">    <span class="variable">$AdminControl</span> invoke <span class="variable">$cluster</span> stop</span><br><span class="line">    puts <span class="string">&quot;clusterStop-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc clusterStart &#123;AdminControl cell_name cluster_name&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;clusterStart---&quot;</span></span><br><span class="line">    <span class="built_in">set</span> clusterMgr [<span class="variable">$AdminControl</span> completeObjectName cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=ClusterMgr,*]</span><br><span class="line">    <span class="variable">$AdminControl</span> invoke <span class="variable">$clusterMgr</span> retrieveClusters</span><br><span class="line">    <span class="built_in">set</span> cluster [<span class="variable">$AdminControl</span> complateObjectName cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=Cluster,name=<span class="variable">$cluster_name</span>,*]</span><br><span class="line">    <span class="variable">$AdminControl</span> invoke <span class="variable">$cluster</span> start</span><br><span class="line">    puts <span class="string">&quot;clusterStart-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc restartCluster &#123;AdminControl AdminConfig cell_name cluster_name&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;restartCluster---&quot;</span></span><br><span class="line">    <span class="variable">$AdminControl</span> invoke [<span class="variable">$AdminControl</span> queryNames cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=Cluster,name=<span class="variable">$cluster_name</span>,*] rippleStart</span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;restartCluster-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc uninstall &#123;AdminApp AdminConfig war_id&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;uninstall---&quot;</span></span><br><span class="line">    <span class="variable">$AdminApp</span> uninstall <span class="variable">$war_id</span></span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;uninstall-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc install &#123;AdminApp AdminConfig install_path war_name war_id cell_name cluster_name contextroot&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;install---&quot;</span></span><br><span class="line">    <span class="built_in">set</span> add_webserver <span class="string">&quot;+WebSphere:cell=Cell0,node=AppNode01,server=webserver1&quot;</span></span><br><span class="line">    <span class="keyword">if</span> &#123;<span class="variable">$websever_flag</span> == 1&#125; &#123;<span class="built_in">set</span> cluster $cluster_name<span class="variable">$add_webserver</span>&#125;</span><br><span class="line">    <span class="variable">$AdminApp</span> install <span class="variable">$install_path</span>/<span class="variable">$war_name</span> [subst &#123;-cell <span class="variable">$cell_name</span> -appname war_id -contextroot <span class="variable">$contextroot</span> -MapWebModToVH &#123;&#123;<span class="variable">$war_id</span> <span class="variable">$war_name</span>,WEB-INF/web.xml default_host&#125;&#125;&#125;]</span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;install-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc parentLast &#123;AdminConfig war_id&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;classloaderMode-parent-last---&quot;</span></span><br><span class="line">    <span class="built_in">set</span> deployments [<span class="variable">$AdminConfig</span> getid /Deployment:<span class="variable">$war_id</span>/]</span><br><span class="line">    <span class="built_in">set</span> deploymentObject [<span class="variable">$AdminConfig</span> showAttribute <span class="variable">$deployments</span> deployedObject]</span><br><span class="line">    <span class="built_in">set</span> myModules [lindex [$<span class="variable">$AdminConfig</span> showAttribute <span class="variable">$deploymentObject</span> modules] 0]</span><br><span class="line">    foreach module <span class="variable">$myModules</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> &#123;[regexp WebModuleDeployment <span class="variable">$module</span>] == 1&#125; &#123;</span><br><span class="line">            <span class="variable">$AdminConfig</span> modify <span class="variable">$module</span> &#123;&#123;classloaderMode PARENT_LAST&#125;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;classloaderMode-parent-last-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc <span class="built_in">sync</span> &#123;AdminControl AdminConfig cell_name&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;sync---&quot;</span></span><br><span class="line">    <span class="built_in">set</span> node_names [<span class="variable">$AdminControl</span> queryNames cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=NodeSync,*]</span><br><span class="line">    foreach name <span class="variable">$node_names</span> &#123;</span><br><span class="line">        puts <span class="variable">$name</span></span><br><span class="line">        <span class="variable">$AdminControl</span> invoke <span class="variable">$name</span> <span class="built_in">sync</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;sync-success&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proc start &#123;AdminControl AdminConfig nodes cell_name <span class="variable">$app_name</span>&#125; &#123;</span><br><span class="line">    puts <span class="string">&quot;start---&quot;</span></span><br><span class="line">    foreach node <span class="variable">$nodes</span> &#123;</span><br><span class="line">        catch &#123;<span class="variable">$AdminControl</span> invoke [<span class="variable">$AdminControl</span> queryNames cell=<span class="variable">$cell_name</span>,<span class="built_in">type</span>=ApplicationManager,node=<span class="variable">$node</span>,*] startApplication $<span class="variable">$app_name</span>&#125; error</span><br><span class="line">        <span class="keyword">if</span> &#123; <span class="variable">$error</span> != <span class="string">&quot;&quot;</span> &#125; &#123;</span><br><span class="line">            puts <span class="string">&quot;failed to start <span class="variable">$node</span>:<span class="variable">$error</span>&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$AdminConfig</span> save</span><br><span class="line">    puts <span class="string">&quot;start-end&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-创建-paramXXX-jacl"><a href="#3-创建-paramXXX-jacl" class="headerlink" title="3.创建 paramXXX.jacl"></a>3.创建 paramXXX.jacl</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设置应用名称</span></span><br><span class="line"><span class="built_in">set</span> app_name 包名(不需要后缀)</span><br><span class="line"><span class="comment">#打印应用名称</span></span><br><span class="line">puts <span class="string">&quot;app_name:<span class="variable">$app_name</span>&quot;</span></span><br><span class="line"><span class="comment">#设置集群名称</span></span><br><span class="line"><span class="built_in">set</span> cluster_name 集群名称</span><br><span class="line"><span class="comment">#设置war包名称</span></span><br><span class="line"><span class="built_in">set</span> war_name <span class="string">&quot;<span class="variable">$app_name</span>.war&quot;</span></span><br><span class="line"><span class="comment">#设置warId</span></span><br><span class="line"><span class="built_in">set</span> war_id <span class="string">&quot;_war&quot;</span></span><br><span class="line"><span class="built_in">set</span> war_id $app_name<span class="variable">$war_id</span></span><br><span class="line"><span class="comment">#设置单元格名称 根据需求设置，可以通过was安装页面右侧帮助查看上一个操作的脚本编制命令</span></span><br><span class="line"><span class="built_in">set</span> cell_name Cell0</span><br><span class="line"><span class="comment">#设置安装包路径</span></span><br><span class="line"><span class="built_in">set</span> install_path 安装包所在路径</span><br><span class="line"><span class="comment">#设置上下文</span></span><br><span class="line"><span class="built_in">set</span> contextroot 服务上下文</span><br><span class="line"><span class="comment">#是否需要增加webserver</span></span><br><span class="line"><span class="built_in">set</span> webserver_flag 0</span><br></pre></td></tr></table></figure>
+<h4 id="4-启动-wsadmin-工具"><a href="#4-启动-wsadmin-工具" class="headerlink" title="4.启动 wsadmin 工具"></a>4.启动 wsadmin 工具</h4><p>从 bin 目录中输入以下命令以启动 wsadmin 工具并连接到服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#was安装目录bin</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$WAS_HOME</span><span class="string">&quot;/bin&quot;</span></span><br><span class="line"><span class="comment">#启动命令及参数 $1 操作 $2 文件名参数 $3 脚本目录</span></span><br><span class="line">param_file=<span class="string">&quot;param_&quot;</span><span class="variable">$2</span></span><br><span class="line">./wsadmin.sh -conntype SOAP -user 用户名 -password 密码 -lang jacl -f 目录/cmd.jacl <span class="variable">$1</span> <span class="variable">$2</span> <span class="variable">$3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><p>从 bin 目录中输入以下命令以启动 wsadmin 工具并连接到服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin&gt;wsadmin -lang jython</span><br></pre></td></tr></table></figure>
+<p>从 bin 目录中输入以下命令，以本地方式并使用 Jython 脚本语言启动 wsadmin 工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsadmin -conntype none -lang jython</span><br></pre></td></tr></table></figure>
+<p>使用 wsadmin 命令指定 Jython V2.1</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsadmin -conntype soap -usejython21 <span class="literal">true</span> -f test.py</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/14/WebSphere/" data-id="clai7qn8p0000209s3kt76m54" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/11/10/db2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">db2语法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/14/WebSphere/">WebSphere相关问题记录</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/10/db2/">db2语法</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/09/nginx/">nginx配置及相关命令</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/08/linuxCommand/">linux命令</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/04/blogBuild/">Hexo个人博客搭建</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

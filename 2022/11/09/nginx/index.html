@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>nginx配置及相关命令 | Glass</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="nginx 教程|菜鸟教程: 友情链接 重新打开日志文件1nginx目录&#x2F;sbin&#x2F;nginx -s reopen 重新加载nginx配置信息1nginx目录&#x2F;sbin&#x2F;nginx -s reload nginx启动1.&#x2F;nginx目录&#x2F;sbin&#x2F;nginx session保持123456789http&amp;#123;    upstream xxx &amp;#123;        #ip_hash 用于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx配置及相关命令">
+<meta property="og:url" content="http://example.com/2022/11/09/nginx/index.html">
+<meta property="og:site_name" content="Glass">
+<meta property="og:description" content="nginx 教程|菜鸟教程: 友情链接 重新打开日志文件1nginx目录&#x2F;sbin&#x2F;nginx -s reopen 重新加载nginx配置信息1nginx目录&#x2F;sbin&#x2F;nginx -s reload nginx启动1.&#x2F;nginx目录&#x2F;sbin&#x2F;nginx session保持123456789http&amp;#123;    upstream xxx &amp;#123;        #ip_hash 用于">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-09T08:52:52.000Z">
+<meta property="article:modified_time" content="2022-11-09T12:44:21.262Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Glass" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Glass</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-nginx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/11/09/nginx/" class="article-date">
+  <time datetime="2022-11-09T08:52:52.000Z" itemprop="datePublished">2022-11-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      nginx配置及相关命令
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>nginx 教程|菜鸟教程: <a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/nginx-setup-intro.html">友情链接</a></p>
+<h3 id="重新打开日志文件"><a href="#重新打开日志文件" class="headerlink" title="重新打开日志文件"></a>重新打开日志文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx目录/sbin/nginx -s reopen</span><br></pre></td></tr></table></figure>
+<h3 id="重新加载nginx配置信息"><a href="#重新加载nginx配置信息" class="headerlink" title="重新加载nginx配置信息"></a>重新加载nginx配置信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx目录/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
+<h3 id="nginx启动"><a href="#nginx启动" class="headerlink" title="nginx启动"></a>nginx启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx目录/sbin/nginx</span><br></pre></td></tr></table></figure>
+<h3 id="session保持"><a href="#session保持" class="headerlink" title="session保持"></a>session保持</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http&#123;</span><br><span class="line">    upstream xxx &#123;</span><br><span class="line">        <span class="comment">#ip_hash 用于session粘连</span></span><br><span class="line">        ip_hash;</span><br><span class="line">        server xxx.xxx.xxx.xxx:xxxx weight=1;</span><br><span class="line">        server xxx.xxx.xxx.xxx:xxxx weight=1;</span><br><span class="line">        keepalive 65;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="端口转发配置"><a href="#端口转发配置" class="headerlink" title="端口转发配置"></a>端口转发配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http&#123;</span><br><span class="line">    location /xxx &#123;</span><br><span class="line">        proxy_pass http://xxx;</span><br><span class="line">        proxy_set_header Host <span class="variable">$http_host</span>;</span><br><span class="line">        proxy_redirect / http://<span class="variable">$host</span>:<span class="variable">$server_port</span>/;</span><br><span class="line">        ...</span><br><span class="line">        proxy_connect_timeout 5; <span class="comment">#5秒超时</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置开机自启动：</p>
+<p>方式一：在/etc/rc.local中配置</p>
+<p>可以将此命令加入到rc.local文件中，这样开机的时候nginx就默认启动了</p>
+<p>vi /etc/rc.local</p>
+<p>加入一行  /etc/init.d/nginx start    保存并退出，下次重启会生效。</p>
+<p>方式二：将nginx配置成自启动的服务</p>
+<p>1.添加至服务管理列表，并让其开机自动启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --add nginx</span><br><span class="line">chkconfig nginx on</span><br><span class="line">chkconfig nginx --list</span><br></pre></td></tr></table></figure>
+<p>日志切片待学习</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/09/nginx/" data-id="clai7qn990005209s6bbf4zox" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/11/10/db2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          db2语法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/11/08/linuxCommand/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">linux命令</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/14/WebSphere/">WebSphere相关问题记录</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/10/db2/">db2语法</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/09/nginx/">nginx配置及相关命令</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/08/linuxCommand/">linux命令</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/04/blogBuild/">Hexo个人博客搭建</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
